@@ -10,9 +10,11 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 #include "lite/backends/opencl/cl_runtime.h"
+
 #include <string>
 #include <utility>
 #include <vector>
+
 #include "lite/backends/opencl/utils/cache.h"
 #include "lite/core/target_wrapper.h"
 #include "lite/core/version.h"
@@ -24,9 +26,8 @@ namespace paddle {
 namespace lite {
 
 CLRuntime* CLRuntime::Global() {
-  thread_local CLRuntime cl_runtime_;
-  cl_runtime_.Init();
-  return &cl_runtime_;
+  static CLRuntime instance;
+  return &instance;
 }
 
 void CLRuntime::Flush(const int index) {
